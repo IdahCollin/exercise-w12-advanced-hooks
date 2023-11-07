@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 
 export const App = () => {
   const [theme, setTheme] = useState("light");
@@ -24,18 +24,31 @@ export const App = () => {
   A universe veiled in enigmatic art,
   We explore the depths of our own heart.
 `;
+
+  useLayoutEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  }
+
+
   return (
     <div className="App">
       Hello Coders!
-      <div>
-        <h4>Light Poem</h4>
-        <p>{lightPoem}</p>
-      </div>
-      <hr />
-      <div>
-        <h4>Dark Poem</h4>
-        <p>{darkPoem}</p>
-      </div>
+      {theme === "light" ? (
+        <div>
+          <h4>Light Poem</h4>
+          <p>{lightPoem}</p>
+        </div>
+      ) : (
+        <div>
+          <h4>Dark Poem</h4>
+          <p>{darkPoem}</p>
+        </div>
+      )}
+      <button onClick={toggleTheme}>Toggle Theme</button>
     </div>
   );
 };
